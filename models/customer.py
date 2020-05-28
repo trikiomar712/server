@@ -1,10 +1,10 @@
-from app import db
+from mongoengine import StringField, IntField, Document, ListField, ReferenceField
 
-class Address(db.Document):
-    code = db.StringField(unique=True, null=False, required=True)
-    country = db.StringField(required=True)
-    city = db.StringField()
-    zip_code = db.IntField()
+class Address(Document):
+    code = StringField(unique=True, null=False, required=True)
+    country = StringField(required=True)
+    city = StringField()
+    zip_code = IntField()
 
     def to_json(self):
         return {
@@ -15,15 +15,15 @@ class Address(db.Document):
         }
 
 
-class Customer(db.Document):
-    code = db.StringField(unique=True, required=True)
-    socialReason = db.StringField()
-    revenueStamp = db.StringField()
-    phones = db.ListField(db.StringField())
-    emails = db.ListField(db.StringField(unique=True))
-    address = db.ListField(db.ReferenceField(Address))
-    password = db.StringField()
-    login = db.StringField()
+class Customer(Document):
+    code = StringField(unique=True, required=True)
+    socialReason = StringField()
+    revenueStamp = StringField()
+    phones = ListField(StringField())
+    emails = ListField(StringField(unique=True))
+    address = ListField(ReferenceField(Address))
+    password = StringField()
+    login = StringField()
 
     def to_json(self):
         addresses = []

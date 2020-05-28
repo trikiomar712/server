@@ -1,1 +1,3 @@
-from flask_login import UserMixin
+from .product import Product
+from .customer import Customer
+from .invoice import Invoice
