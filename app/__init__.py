@@ -7,9 +7,7 @@ network_host = 'mongodb+srv://softtodo:softtodo2020@cluster0-a1y5d.mongodb.net/s
 class Config(object):
     MONGODB_SETTINGS = {
         'db': 'softtodo',
-        'host': 'localhost',
-        'username': 'softtodo',
-        'password': 'softtodo2020'
+        'host': 'mongodb+srv://softtodo:softtodo2020@cluster0-a1y5d.mongodb.net/softtodo?retryWrites=true&w=majority',
     }
     SECRET_KEY = 'hello world'
 
