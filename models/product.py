@@ -1,17 +1,16 @@
-from app import db
+from mongoengine import Document, StringField, FloatField, IntField, ReferenceField
 
-
-class Product(db.Document):
-    code = db.StringField(primary_key=True)
-    description = db.StringField()
-    realStock = db.IntField()
-    initialStock = db.FloatField()
-    buyingPrice = db.FloatField()
-    sellingPrice = db.FloatField()
-    stockMin = db.FloatField()
-    stockMax = db.FloatField()
-    discount = db.FloatField()
-    quantitySold = db.IntegerField()
+class Product(Document):
+    code = StringField(primary_key=True)
+    description = StringField()
+    realStock = IntField()
+    initialStock = FloatField()
+    buyingPrice = FloatField()
+    sellingPrice = FloatField()
+    stockMin = FloatField()
+    stockMax = FloatField()
+    discount = FloatField()
+    quantitySold = IntField()
 
     def to_json(self):
         return {

@@ -1,10 +1,11 @@
 from mongoengine import StringField, IntField, Document, ListField, ReferenceField
+from flask_login import UserMixin
 
 class Address(Document):
-    code = StringField(unique=True, null=False, required=True)
+    code = StringField(primary_key=True)
     country = StringField(required=True)
     city = StringField()
-    zip_code = IntField()
+    zip_code = StringField()
 
     def to_json(self):
         return {
@@ -15,8 +16,8 @@ class Address(Document):
         }
 
 
-class Customer(Document):
-    code = StringField(unique=True, required=True)
+class Customer(Document, UserMixin):
+    code = StringField(primary_key=True)
     socialReason = StringField()
     revenueStamp = StringField()
     phones = ListField(StringField())
@@ -24,6 +25,18 @@ class Customer(Document):
     address = ListField(ReferenceField(Address))
     password = StringField()
     login = StringField()
+
+    def __init__(self, code, socialReason, revenueStamp, phones, emails, address, password, login):
+        super().__init__()
+        self.code = code
+        self.socialReason = socialReason
+        self.revenueStamp = revenueStamp
+        self.phones = phones
+        self.emails = emails
+        self.address = address
+        self.password = password
+        self.login = login
+
 
     def to_json(self):
         addresses = []
