@@ -1,4 +1,4 @@
-from app import db
+import mongoengine as db
 from .product import Product
 from .customer import Customer
 import datetime
@@ -15,6 +15,19 @@ class Invoice(db.Document):
     isScanned = db.BooleanField()
     date_modified = db.DateTimeField(default=datetime.datetime.utcnow)
 
+    def __init__(self, products, customer, code, totalHT, totalNetHT, totalTVA, totalTTC, isScanned, date_modified,
+                 *args, **values):
+        super().__init__(*args, **values)
+        self.products = products
+        self.customer = customer
+        self.code = code
+        self.totalHT = totalHT
+        self.totalNetHT = totalNetHT
+        self.totalTVA = totalTVA
+        self.totalTTC = totalTTC
+        self.isScanned = isScanned
+        self.date_modified = date_modified
+
     def to_json(self):
         products = self.products
         products_to_json = []
@@ -28,5 +41,4 @@ class Invoice(db.Document):
             'totalNetHT': self.totalNetHT,
             'totalTVA': self.totalTVA,
             'totalTTC': self.totalTTC,
-            'isScanned': self.is_scanned
         }

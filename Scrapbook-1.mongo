@@ -1,0 +1,7 @@
+db.createUser({
+    user: 'softtodo',
+    pwd: 'softtodo',
+    passwordDigestor:"server",
+    roles:['readWrite'],
+    mechanisms: [ "SCRAM-SHA-256", "SCRAM-SHA-1"]
+})

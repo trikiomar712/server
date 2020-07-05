@@ -1,5 +1,6 @@
 from mongoengine import Document, StringField, FloatField, IntField, ReferenceField
 
+
 class Product(Document):
     code = StringField(primary_key=True)
     description = StringField()

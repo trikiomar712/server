@@ -1,7 +1,9 @@
 class Config(object):
     MONGODB_SETTINGS = {
         'db': 'softtodo',
-        'host': 'mongodb+srv://softtodo:softtodo2020@cluster0-a1y5d.mongodb.net/softtodo?retryWrites=true&w=majority',
+        'host': 'localhost',
+        'username': 'softtodo',
+        'password': 'softtodo'
     }
-    SECRET_KEY = 'hello world'
     DEBUG = True
+    JWT_SECRET_KEY = 'my secret key for my data'
