@@ -6,9 +6,25 @@
 </head>
 <body>
 <form onsubmit="login(e)">
-    <label>email : </label> <input type="text" name="login" id="login" />
-    <label> password : </label> <input type="text" name="password" id="password" />
-    <button type="submit" name="button">login</button>
+    <label for="cin">cin</label> <input type="text" id="cin"><br>
+    <label for="socialReason">socialReason</label> <input type="text" name="socialReason" id="socialReason"/><br>
+    <label for="revenueStamp">revenueStamp</label> <input type="text" name="revenueStamp" id="revenueStamp"/><br>
+    <label for="login">login : </label> <input type="text" name="login" id="login"/><br>
+    <label for="password"> password : </label> <input type="text" name="password" id="password" /><br>
+    <label for="address">address</label><br>
+    <div>
+      <label for="country"></label> <input type="country" id="country" name="country" /><br>
+      <label for="cityOrVillage">cityOrVillage</label> <input type="text" name="cityOrVillage" id="cityOrVillage"><br>
+      <label for="zipCode">zipCode</label> <input type="text" name="zipCode" id="zipCode" /><br>
+    </div>
+    <label for="phones">phones</label>
+    <div>
+      <label for="phone1">phone1</label> <input type="text" name="phone1" id="phone1" /><br>
+      <label for="phone2">phone2</label> <input type="text" name="phone2" id="phone2" /><br>
+      <label for="phone3">phone3</label> <input type="text" name="phone3" id="phone3" /><br>
+    </div>
+    <button type="button" name="button" onclick="signUp()">sign up</button>
+    <button type="reset" name="reset">reset</button>
 </form>
 </body>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

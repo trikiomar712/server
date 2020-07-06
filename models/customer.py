@@ -15,21 +15,18 @@ class Role(db.Document, RoleMixin):
 
 
 class Address(db.Document):
-    code = db.StringField(unique=True, required=True)
     country = db.StringField(required=True)
     cityOrVillage = db.StringField(required=True)
     zipCode = db.StringField(required=True)
 
-    def __init__(self, code, country, cityOrVillage, zipCode, *args, **kwargs):
+    def __init__(self, country, cityOrVillage, zipCode, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.code = code
         self.country = country
         self.cityOrVillage = cityOrVillage
         self.zipCode = zipCode
 
     def to_json(self):
         return {
-            'code': self.code,
             'country': self.country,
             'cityOrVillage': self.cityOrVillage,
             'zipCode': self.zipCode
@@ -37,18 +34,18 @@ class Address(db.Document):
 
 
 class Customer(db.Document, UserMixin):
-    code = db.StringField(unique=True, required=True)
+    cin = db.StringField(unique=True, required=True)
     socialReason = db.StringField(unique=True, required=True)
     revenueStamp = db.StringField()
     phones = db.ListField(db.StringField(unique=True), default=[])
     emails = db.ListField(db.StringField(unique=True), default=[])
     address = db.ListField(db.ReferenceField(Address), default=[])
-    password = db.StringField(required=True)
-    login = db.StringField(required=True, unique=True)
+    password = db.StringField()
+    email = db.StringField(required=True, unique=True)
     roles = db.ListField(db.ReferenceField(Role), default=[])
     active = db.BooleanField(default=False)
 
-    def __init__(self, code, socialReason, revenueStamp, password, login, phones=None, emails=None, address=None,
+    def __init__(self, cin, socialReason, revenueStamp, password, email, phones=None, emails=None, address=None,
                  roles=None, active=False, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if address is None:
@@ -59,14 +56,14 @@ class Customer(db.Document, UserMixin):
             phones = []
         if roles is None:
             roles = []
-        self.code = code
+        self.cin = cin
         self.socialReason = socialReason
         self.revenueStamp = revenueStamp
         self.phones = phones
         self.emails = emails
         self.address = address
         self.password = password
-        self.login = login
+        self.email = email
         self.roles = roles
         self.active = active
 
@@ -76,14 +73,8 @@ class Customer(db.Document, UserMixin):
         for i, j in zip(self.address, self.roles):
             addresses.append(i.to_json())
             roles.append(j.to_json)
+        print(self.id)
         return {
-            'code': self.code,
             'socialReason': self.socialReason,
-            'phones': self.phones,
-            'emails': self.emails,
-            'address': addresses,
-            'login': self.login,
-            'password': self.password,
-            'revenueStamp': self.revenueStamp,
-            'roles': roles
+            'email': self.email,
         }

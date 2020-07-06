@@ -1,4 +1,4 @@
-from repositories.customerRepository import CustomerRepository, AddressRepository
+from repositories import CustomerRepository, AddressRepository
 
 
 class CustomerService(object):
@@ -11,7 +11,9 @@ class CustomerService(object):
     def get_customers(self): return self.customerRepository.get_customers()
 
     def get_specific_customer(self, data):
-        self.customer = self.customerRepository.get_customer(data)
+        print(data)
+        self.customer = self.customerRepository.get_customer_by_login(data)
+        print(self.customer.password)
         return self.customer.to_json()
 
     def add_customer(self, data):
@@ -26,10 +28,15 @@ class CustomerService(object):
         elif data.get('address') is None or data.get('address') == []:
             raise Exception('customer must have address')
         else:
-            address = self.addressRepository.get_address(data.get('address'))
-            if address is None:
-                address = self.addressRepository.add_address(**(data.get('address')))
-            data['address'] = address
+            addresses = []
+            for i in data.get('address'):
+                address = self.addressRepository.get_address(i)
+                if address is None:
+                    address = self.addressRepository.add_address(i)
+                else:
+                    address = address.id
+                addresses.append(address)
+            data['address'] = addresses
             self.customer = self.customerRepository.add_customer(data)
             return self.customer.to_json()
 
@@ -42,6 +49,6 @@ class CustomerService(object):
             return False
 
     def reset_password(self, data):
-        self.customer.set_password(data)
+        self.customer.password = hash_password(data)
         self.customer.save()
         return self.customer.to_json()

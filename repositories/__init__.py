@@ -1,1 +1,1 @@
-from .customerRepository import customerRepository
+from .customerRepository import CustomerRepository, AddressRepository
